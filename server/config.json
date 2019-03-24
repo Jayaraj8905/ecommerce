@@ -1,0 +1,7 @@
+{
+    "dburl": "<DBURL>",
+    "dbusername": "<DBUSERNAME>",
+    "dbpassword": "<DBPASSWORD>",
+    "db": "<DB>",
+    "secret": "<JWT SECRET>"
+}
