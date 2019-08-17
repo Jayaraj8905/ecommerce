@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
@@ -32,8 +33,11 @@ const schema = new Schema({
         default: 'ACTIVE' 
     },
     createddate: { type: Date, default: Date.now },
-    udpateddate: { type: Date, default: Date.now }
+    updateddate: { type: Date, default: Date.now }
 });
+
+// unique validator for username and email
+schema.plugin(uniqueValidator, { message: '{PATH} should be unique.' })
 
 schema.set('toJSON', { virtuals: true });
 
