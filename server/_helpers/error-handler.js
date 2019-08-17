@@ -8,7 +8,7 @@ function errorHandler(err, req, res, next) {
 
     if (err.name === 'ValidationError') {
         // mongoose validation error
-        return res.status(400).json({ errors: err.errors });
+        return res.status(400).json({ message: err.message });
     }
 
     if (err.name === 'UnauthorizedError') {
