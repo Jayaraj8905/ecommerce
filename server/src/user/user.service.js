@@ -73,6 +73,8 @@ async function update(id, userParam) {
     }
 
     // copy userParam properties to user
+    // add the update date 
+    userParam.updatedate =  Date.now;
     Object.assign(user, userParam);
 
     await user.save();
