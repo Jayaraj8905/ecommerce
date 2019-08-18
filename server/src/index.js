@@ -16,6 +16,7 @@ app.use(jwt());
 
 // api routes
 app.use('/user', require('./user/user.controller'));
+app.use('/roles', require('./roles/roles.controller'));
 
 app.use(express.static('public'));
 
