@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise;
 
 module.exports = {
     User: require('../src/user/user.model'),
-    Roles: require('../src/roles/roles.model')
+    Roles: require('../src/roles/roles.model').Roles
 };
 
 // "connectionString": "mongodb://<dbuser>:<dbpassword>@ds263917.mlab.com:63917/ecommerce"

@@ -25,4 +25,7 @@ schema.plugin(uniqueValidator, { message: 'Role {PATH} should be unique.' })
 
 schema.set('toJSON', { virtuals: true });
 
-module.exports = mongoose.model('Roles', schema);
+module.exports = {
+    Roles: mongoose.model('Roles', schema),
+    ROLES
+};
