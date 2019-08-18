@@ -26,7 +26,11 @@ const schema = new Schema({
         required: [true, 'Name is required'],
         minlength: [4, 'Name must have 4 characters'],
     },
-    // role: {},
+    role: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Roles',
+        required: [true, 'Role is required']
+    },
     status: { 
         type: String,
         enum: ['ACTIVE', 'INACTIVE', 'BLOCKED'], 

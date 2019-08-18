@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
 const User = db.User;
+const rolesService = require('../roles/roles.service');
+const ROLES = require('../roles/roles.model').ROLES;
 
 module.exports = {
     authenticate,
@@ -27,12 +29,12 @@ async function authenticate({ username, password }) {
 
 async function getAll() {
     // TODO: RESTRICT TO ALLOW FOR VALID USERS
-    return await User.find().select('-hash');
+    return await User.find().populate('role').select('-hash');
 }
 
 async function getById(id) {
     // TODO: RESTRICT TO ALLOW FOR VALID USERS
-    return await User.findById(id).select('-hash');
+    return await User.findById(id).populate('role').select('-hash');
 }
 
 async function create(userParam) {
@@ -52,6 +54,19 @@ async function create(userParam) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
     }
 
+    // update the role always default to customer if not provided
+    let role;
+    if (userParam.role && userParam.role.id) {
+        role = await rolesService.getById(userParam.role.id)
+    } else {
+        role = await rolesService.getByName({name: ROLES.CUSTOMER})
+    }
+
+    if (!role) {
+        throw `Role not exists`;
+    }
+    user.role = role.id;
+
     // save user
     await user.save();
 }
@@ -70,6 +85,15 @@ async function update(id, userParam) {
     // hash password if it was entered
     if (userParam.password) {
         userParam.hash = bcrypt.hashSync(userParam.password, 10);
+    }
+
+    // update the role if there is request for role update
+    if (userParam.role && userParam.role.id) {
+        const role = await rolesService.getById(userParam.role.id)
+        if (!role) {
+            throw `Role not exists`;
+        }
+        userParam.role = role.id;
     }
 
     // copy userParam properties to user
