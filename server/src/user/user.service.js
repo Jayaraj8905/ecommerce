@@ -26,10 +26,12 @@ async function authenticate({ username, password }) {
 }
 
 async function getAll() {
+    // TODO: RESTRICT TO ALLOW FOR VALID USERS
     return await User.find().select('-hash');
 }
 
 async function getById(id) {
+    // TODO: RESTRICT TO ALLOW FOR VALID USERS
     return await User.findById(id).select('-hash');
 }
 
@@ -55,6 +57,8 @@ async function create(userParam) {
 }
 
 async function update(id, userParam) {
+    // TODO: RESTRICT TO ALLOW FOR VALID USERS
+    // SUPER ADMIN OR SHOP ADMIN (FOR SELLER) OR USER ITSELF CAN UPDATE
     const user = await User.findById(id);
 
     // validate
@@ -75,5 +79,7 @@ async function update(id, userParam) {
 }
 
 async function _delete(id) {
+    // TODO: RESTRICT TO ALLOW FOR VALID USERS
+    // SUPER ADMIN OR SHOP ADMIN (FOR SELLER) OR USER ITSELF CAN UPDATE
     await User.findByIdAndRemove(id);
 }
