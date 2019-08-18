@@ -5,6 +5,8 @@ const Roles = db.Roles;
 
 module.exports = {
     get,
+    getByName,
+    getById,
     create,
     update,
     delete: _delete
@@ -13,6 +15,16 @@ module.exports = {
 async function get() {
     // TODO: RESTRICT TO ALLOW FOR VALID SUPER ADMIN
     return await Roles.find().select();
+}
+
+async function getByName(roleParam) {
+    // TODO: RESTRICT TO ALLOW FOR VALID SUPER ADMIN
+    return await Roles.findOne({name: roleParam.name}).select();
+}
+
+async function getById(id) {
+    // TODO: RESTRICT TO ALLOW FOR VALID SUPER ADMIN
+    return await Roles.findById(id);
 }
 
 async function create(roleParam) {
